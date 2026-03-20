@@ -3,6 +3,11 @@ const header = document.querySelector(".site-header");
 const tiltCard = document.querySelector("[data-tilt-card]");
 const actionButton = document.querySelector(".action-button");
 const toast = document.querySelector("#toast");
+const pdfModal = document.querySelector("#pdf-modal");
+const pdfFrame = document.querySelector("[data-pdf-frame]");
+const pdfOpenButtons = document.querySelectorAll("[data-open-pdf-modal]");
+const pdfCloseButtons = document.querySelectorAll("[data-close-pdf-modal]");
+const pdfClosePrimary = pdfModal?.querySelector(".modal-close");
 
 if (revealItems.length) {
   const observer = new IntersectionObserver(
@@ -115,3 +120,51 @@ if (actionButton) {
     }
   });
 }
+
+const openPdfModal = () => {
+  if (!pdfModal || !pdfFrame) {
+    return;
+  }
+
+  if (!pdfFrame.src) {
+    const source = pdfFrame.dataset.src?.trim();
+
+    if (source) {
+      pdfFrame.src = source;
+    }
+  }
+
+  pdfModal.classList.add("is-open");
+  pdfModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("has-modal");
+  pdfClosePrimary?.focus();
+};
+
+const closePdfModal = () => {
+  if (!pdfModal) {
+    return;
+  }
+
+  pdfModal.classList.remove("is-open");
+  pdfModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("has-modal");
+};
+
+pdfOpenButtons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    openPdfModal();
+  });
+});
+
+pdfCloseButtons.forEach((button) => {
+  button.addEventListener("click", closePdfModal);
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || !pdfModal?.classList.contains("is-open")) {
+    return;
+  }
+
+  closePdfModal();
+});

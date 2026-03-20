@@ -89,14 +89,13 @@
             </div>
 
             <div class="proposal-links reveal">
-              <a
+              <button
                 class="link-chip"
-                href="./proposta-erika-sousa.pdf"
-                target="_blank"
-                rel="noopener"
+                type="button"
+                data-open-pdf-modal
               >
-                Ver PDF online
-              </a>
+                Ver PDF em modal
+              </button>
               <a class="link-chip" href="./proposta-erika-sousa.pdf" download>
                 Baixar PDF
               </a>
@@ -363,9 +362,9 @@
             <span class="section-tag">Versão em PDF</span>
             <h2>Prefere revisar a proposta no formato tradicional?</h2>
             <p>
-              A proposta também está disponível em PDF para abrir direto no
-              navegador, baixar o arquivo ou navegar por uma prévia embutida na
-              própria página.
+              A proposta também está disponível em PDF para abrir em uma
+              visualização elegante, baixar o arquivo ou abrir em nova aba
+              quando preferir.
             </p>
           </div>
 
@@ -373,17 +372,24 @@
             <div class="pdf-toolbar">
               <div class="pdf-meta">
                 <strong>Proposta Comercial Erika Sousa</strong>
-                <span>Arquivo PDF publicado junto com a landing page</span>
+                <span>Visualização premium do documento publicada com a landing page</span>
               </div>
 
               <div class="pdf-actions">
+                <button
+                  class="button"
+                  type="button"
+                  data-open-pdf-modal
+                >
+                  Abrir visualização
+                </button>
                 <a
                   class="button button-ghost"
                   href="./proposta-erika-sousa.pdf"
                   target="_blank"
                   rel="noopener"
                 >
-                  Ver PDF online
+                  Abrir em nova aba
                 </a>
                 <a
                   class="button button-dark"
@@ -395,12 +401,30 @@
               </div>
             </div>
 
-            <div class="pdf-frame-shell">
-              <iframe
-                class="pdf-frame"
-                src="./proposta-erika-sousa.pdf#view=FitH"
-                title="Visualização da proposta comercial em PDF"
-              ></iframe>
+            <div class="pdf-preview">
+              <div class="pdf-preview-copy">
+                <span class="pdf-preview-tag">Acesso imediato</span>
+                <h3>Abra o PDF sem sair da experiência premium da proposta</h3>
+                <p>
+                  O modal mantém a leitura focada, com acesso rápido para abrir
+                  o arquivo em nova aba ou baixar a versão completa.
+                </p>
+              </div>
+
+              <div class="pdf-sheet" aria-hidden="true">
+                <div class="pdf-sheet-bar"></div>
+                <div class="pdf-sheet-title"></div>
+                <div class="pdf-sheet-line pdf-sheet-line-wide"></div>
+                <div class="pdf-sheet-line"></div>
+                <div class="pdf-sheet-line"></div>
+                <div class="pdf-sheet-grid">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="pdf-sheet-panel"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -508,6 +532,59 @@
         <p>Desenrola AI • Proposta comercial personalizada para Érika Sousa</p>
       </div>
     </footer>
+
+    <div class="pdf-modal" id="pdf-modal" aria-hidden="true">
+      <div class="pdf-modal-backdrop" data-close-pdf-modal></div>
+
+      <div
+        class="pdf-modal-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pdf-modal-title"
+      >
+        <div class="pdf-modal-header">
+          <div class="pdf-modal-copy">
+            <p class="pdf-modal-kicker">Visualizacao do PDF</p>
+            <h2 id="pdf-modal-title">Proposta Comercial Erika Sousa</h2>
+          </div>
+
+          <div class="pdf-modal-actions">
+            <a
+              class="button button-ghost button-small-inline"
+              href="./proposta-erika-sousa.pdf"
+              target="_blank"
+              rel="noopener"
+            >
+              Nova aba
+            </a>
+            <a
+              class="button button-dark button-small-inline"
+              href="./proposta-erika-sousa.pdf"
+              download
+            >
+              Baixar PDF
+            </a>
+            <button
+              class="modal-close"
+              type="button"
+              data-close-pdf-modal
+              aria-label="Fechar visualização do PDF"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        <div class="pdf-modal-frame-shell">
+          <iframe
+            class="pdf-modal-frame"
+            data-pdf-frame
+            data-src="./proposta-erika-sousa.pdf#view=FitH"
+            title="Visualização da proposta comercial em PDF"
+          ></iframe>
+        </div>
+      </div>
+    </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 

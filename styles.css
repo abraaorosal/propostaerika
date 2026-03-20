@@ -23,6 +23,10 @@ html {
   scroll-behavior: smooth;
 }
 
+body.has-modal {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -838,18 +842,231 @@ svg {
   font-size: 0.95rem;
 }
 
-.pdf-frame-shell {
-  overflow: hidden;
+.pdf-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(260px, 0.85fr);
+  gap: 1.2rem;
+  align-items: center;
+  padding: 1.2rem;
   border-radius: 1.35rem;
   border: 1px solid rgba(148, 163, 184, 0.18);
-  background: rgba(255, 255, 255, 0.9);
+  background:
+    radial-gradient(circle at top right, rgba(99, 102, 241, 0.14), transparent 36%),
+    linear-gradient(135deg, rgba(0, 102, 255, 0.06), rgba(0, 196, 181, 0.08));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
-.pdf-frame {
+.pdf-preview-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.78rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--blue);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pdf-preview-copy h3 {
+  margin: 1rem 0 0;
+  font-family: "Sora", sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.pdf-preview-copy p {
+  margin: 0.9rem 0 0;
+  max-width: 36rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.pdf-sheet {
+  position: relative;
+  min-height: 22rem;
+  padding: 1.1rem;
+  border-radius: 1.5rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 28px 52px rgba(15, 23, 42, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  overflow: hidden;
+}
+
+.pdf-sheet::before {
+  content: "";
+  position: absolute;
+  inset: auto -3rem -5rem auto;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.18), transparent 70%);
+  filter: blur(8px);
+}
+
+.pdf-sheet-bar,
+.pdf-sheet-title,
+.pdf-sheet-line,
+.pdf-sheet-grid span,
+.pdf-sheet-panel {
+  position: relative;
+  z-index: 1;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.04));
+}
+
+.pdf-sheet-bar {
+  width: 5rem;
+  height: 0.55rem;
+  margin-bottom: 1.2rem;
+}
+
+.pdf-sheet-title {
+  width: 80%;
+  height: 1.05rem;
+  margin-bottom: 0.8rem;
+}
+
+.pdf-sheet-line {
+  width: 100%;
+  height: 0.72rem;
+  margin-bottom: 0.7rem;
+}
+
+.pdf-sheet-line-wide {
+  width: 88%;
+}
+
+.pdf-sheet-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.35rem 0;
+}
+
+.pdf-sheet-grid span {
+  display: block;
+  height: 4.8rem;
+  border-radius: 1rem;
+}
+
+.pdf-sheet-panel {
+  height: 6.8rem;
+  border-radius: 1.15rem;
+}
+
+.pdf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.pdf-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.pdf-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.64);
+  backdrop-filter: blur(10px);
+}
+
+.pdf-modal-dialog {
+  position: relative;
+  width: min(1220px, 100%);
+  max-height: calc(100vh - 2.5rem);
+  padding: 1rem;
+  border-radius: 1.8rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92));
+  border: 1px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 30px 80px rgba(15, 23, 42, 0.28);
+  overflow: hidden;
+}
+
+.pdf-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pdf-modal-kicker {
+  margin: 0 0 0.4rem;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.pdf-modal-copy h2 {
+  margin: 0;
+  font-family: "Sora", sans-serif;
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.pdf-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.button-small-inline {
+  min-height: 2.85rem;
+  padding-inline: 1rem;
+}
+
+.modal-close {
+  display: inline-grid;
+  place-items: center;
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.06);
+  color: var(--text);
+  font-size: 1.6rem;
+  line-height: 1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.modal-close:hover,
+.modal-close:focus-visible {
+  transform: translateY(-1px);
+  background: rgba(15, 23, 42, 0.1);
+}
+
+.pdf-modal-frame-shell {
+  overflow: hidden;
+  border-radius: 1.3rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: white;
+}
+
+.pdf-modal-frame {
   display: block;
   width: 100%;
-  height: 46rem;
+  height: calc(100vh - 10rem);
+  min-height: 30rem;
   border: 0;
   background: white;
 }
@@ -1091,7 +1308,8 @@ svg {
 @media (max-width: 1080px) {
   .hero-grid,
   .problem-shell,
-  .pricing-card {
+  .pricing-card,
+  .pdf-preview {
     grid-template-columns: 1fr;
   }
 
@@ -1146,6 +1364,12 @@ svg {
   }
 
   .pdf-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pdf-modal-header,
+  .pdf-modal-actions {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -1212,8 +1436,22 @@ svg {
     max-width: none;
   }
 
-  .pdf-frame {
-    height: 32rem;
+  .pdf-sheet {
+    min-height: 18rem;
+  }
+
+  .pdf-modal {
+    padding: 0.8rem;
+  }
+
+  .pdf-modal-dialog {
+    padding: 0.85rem;
+    border-radius: 1.25rem;
+  }
+
+  .pdf-modal-frame {
+    height: calc(100vh - 12rem);
+    min-height: 22rem;
   }
 }
 
